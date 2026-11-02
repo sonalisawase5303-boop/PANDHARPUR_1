@@ -1,107 +1,41 @@
-var wms_layers = [];
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <title>Sangola Web-GIS Dashboard</title>
 
-// Google Satellite Basemap
-var lyr_GoogleSatellite = new ol.layer.Tile({
-    'title': 'Google Satellite',
-    'type': 'base',
-    'opacity': 1.000000,
-    source: new ol.source.XYZ({
-        url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
-    })
-});
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./resources/ol.css">
+    <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+    <link href="resources/photon-geocoder-autocomplete.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+    <link rel="stylesheet" href="./resources/qgis2web.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-// Google Terrain Basemap
-var lyr_GoogleTerrain = new ol.layer.Tile({
-    'title': 'Google Terrain',
-    'type': 'base',
-    'opacity': 1.000000,
-    source: new ol.source.XYZ({
-        url: 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}'
-    })
-});
-
-// Vector Layers Setup (Tumchya layer names nusar)
-var format_sang_0 = new ol.format.GeoJSON();
-var features_sang_0 = format_sang_0.readFeatures(json_sang_0, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_sang_0 = new ol.source.Vector({features: features_sang_0});
-var lyr_sang_0 = new ol.layer.Vector({
-    source: jsonSource_sang_0,
-    style: style_sang_0,
-    title: 'sang'
-});
-
-var format_Buildings_1 = new ol.format.GeoJSON();
-var features_Buildings_1 = format_Buildings_1.readFeatures(json_Buildings_1, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Buildings_1 = new ol.source.Vector({features: features_Buildings_1});
-var lyr_Buildings_1 = new ol.layer.Vector({
-    source: jsonSource_Buildings_1,
-    style: style_Buildings_1,
-    title: 'Buildings'
-});
-
-var format_Landuse_2 = new ol.format.GeoJSON();
-var features_Landuse_2 = format_Landuse_2.readFeatures(json_Landuse_2, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Landuse_2 = new ol.source.Vector({features: features_Landuse_2});
-var lyr_Landuse_2 = new ol.layer.Vector({
-    source: jsonSource_Landuse_2,
-    style: style_Landuse_2,
-    title: 'Landuse'
-});
-
-var format_Places_3 = new ol.format.GeoJSON();
-var features_Places_3 = format_Places_3.readFeatures(json_Places_3, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Places_3 = new ol.source.Vector({features: features_Places_3});
-var lyr_Places_3 = new ol.layer.Vector({
-    source: jsonSource_Places_3,
-    style: style_Places_3,
-    title: 'Places'
-});
-
-var format_pois_4 = new ol.format.GeoJSON();
-var features_pois_4 = format_pois_4.readFeatures(json_pois_4, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_pois_4 = new ol.source.Vector({features: features_pois_4});
-var lyr_pois_4 = new ol.layer.Vector({
-    source: jsonSource_pois_4,
-    style: style_pois_4,
-    title: 'pois'
-});
-
-var format_Pois_1_5 = new ol.format.GeoJSON();
-var features_Pois_1_5 = format_Pois_1_5.readFeatures(json_Pois_1_5, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Pois_1_5 = new ol.source.Vector({features: features_Pois_1_5});
-var lyr_Pois_1_5 = new ol.layer.Vector({
-    source: jsonSource_Pois_1_5,
-    style: style_Pois_1_5,
-    title: 'Pois_1'
-});
-
-var format_Railways_6 = new ol.format.GeoJSON();
-var features_Railways_6 = format_Railways_6.readFeatures(json_Railways_6, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Railways_6 = new ol.source.Vector({features: features_Railways_6});
-var lyr_Railways_6 = new ol.layer.Vector({
-    source: jsonSource_Railways_6,
-    style: style_Railways_6,
-    title: 'Railways'
-});
-
-var format_Roads_7 = new ol.format.GeoJSON();
-var features_Roads_7 = format_Roads_7.readFeatures(json_Roads_7, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-var jsonSource_Roads_7 = new ol.source.Vector({features: features_Roads_7});
-var lyr_Roads_7 = new ol.layer.Vector({
-    source: jsonSource_Roads_7,
-    style: style_Roads_7,
-    title: 'Roads'
-});
-
-var layersList = [
-    lyr_GoogleSatellite,
-    lyr_GoogleTerrain,
-    lyr_sang_0,
-    lyr_Buildings_1,
-    lyr_Landuse_2,
-    lyr_Places_3,
-    lyr_pois_4,
-    lyr_Pois_1_5,
-    lyr_Railways_6,
-    lyr_Roads_7
-];
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --panel-bg: rgba(30, 41, 59, 0.95);
+            --panel-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --accent-color: #38bdf8;
+            --radius: 12px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background-color: var(--bg-dark); color: var(--text-main); }
+        #app-container { display: flex; flex-direction: column; width: 100vw; height: 100vh; }
+        header { height: 60px; background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid var(--panel-border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 1000; }
+        .header-title { font-size: 1.1rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
+        .workspace { display: flex; flex: 1; position: relative; overflow: hidden; width: 100%; height: calc(100vh - 60px); }
+        #sidebar { width: 280px; background: var(--panel-bg); border-right: 1px solid var(--panel-border); display: flex; flex-direction: column; z-index: 900; padding: 15px; overflow-y: auto; }
+        .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-sub); margin-bottom: 10px; }
+        .layer-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem; }
+        #map { flex: 1; width: 100%; height: 100%; position: relative; background-color: #0b132b; }
+        .ol-popup { position: absolute; background: var(--panel-bg); border: 1px solid var(--panel-border); padding: 12px; border-radius: var(--radius); bottom: 15px; left: -50px; min-width: 250px; color: var(--text-main); z-index: 1000; backdrop-filter: blur(10px); }
+        .ol-popup-closer { text-decoration: none; position: absolute; top: 8px; right:
