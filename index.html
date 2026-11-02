@@ -1,35 +1,116 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-    <title>Pandharpur Web-GIS Dashboard</title>
+var wms_layers = [];
 
-    <!-- OpenLayers Standard CDN Stylesheet -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css">
-    <link rel="stylesheet" href="resources/fontawesome-all.min.css">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+// Google Satellite Tile Layer Definition
+var lyr_GoogleSatellite = new ol.layer.Tile({
+    'title': 'Google Satellite',
+    'type': 'base',
+    'opacity': 1.000000,
+    source: new ol.source.XYZ({
+        url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+    })
+});
 
-    <style>
-        :root {
-            --bg-dark: #0f172a;
-            --panel-bg: rgba(30, 41, 59, 0.95);
-            --panel-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --accent-color: #38bdf8;
-            --radius: 12px;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        html, body { width: 100%; height: 100%; overflow: hidden; background-color: var(--bg-dark); color: var(--text-main); }
-        #app-container { display: flex; flex-direction: column; width: 100vw; height: 100vh; }
-        header { height: 60px; background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid var(--panel-border); display: flex; align-items: center; justify-content: space-between; padding: 0 20px; z-index: 1000; }
-        .header-title { font-size: 1.1rem; font-weight: 600; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-        .workspace { display: flex; flex: 1; position: relative; overflow: hidden; width: 100%; height: calc(100vh - 60px); }
-        #sidebar { width: 300px; background: var(--panel-bg); border-right: 1px solid var(--panel-border); display: flex; flex-direction: column; z-index: 900; padding: 15px; overflow-y: auto; }
-        .section
+// Vector Layers Initialization from export
+var format_BUIDING_0 = new ol.format.GeoJSON();
+var features_BUIDING_0 = format_BUIDING_0.readFeatures(json_BUIDING_0, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_BUIDING_0 = new ol.source.Vector({
+    features: features_BUIDING_0,
+});
+var lyr_BUIDING_0 = new ol.layer.Vector({
+    declutter: true,
+    source: jsonSource_BUIDING_0,
+    style: style_BUIDING_0,
+    title: 'BUIDING'
+});
+
+var format_LANDUSE_1 = new ol.format.GeoJSON();
+var features_LANDUSE_1 = format_LANDUSE_1.readFeatures(json_LANDUSE_1, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_LANDUSE_1 = new ol.source.Vector({
+    features: features_LANDUSE_1,
+});
+var lyr_LANDUSE_1 = new ol.layer.Vector({
+    declutter: true,
+    source: jsonSource_LANDUSE_1,
+    style: style_LANDUSE_1,
+    title: 'LAND USE'
+});
+
+var format_RAILWAYS_2_2 = new ol.format.GeoJSON();
+var features_RAILWAYS_2_2 = format_RAILWAYS_2_2.readFeatures(json_RAILWAYS_2_2, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_RAILWAYS_2_2 = new ol.source.Vector({
+    features: features_RAILWAYS_2_2,
+});
+var lyr_RAILWAYS_2_2 = new ol.layer.Vector({
+    declutter: true,
+    source: jsonSource_RAILWAYS_2_2,
+    style: style_RAILWAYS_2_2,
+    title: 'RAILWAYS_2'
+});
+
+var format_ROAD_3 = new ol.format.GeoJSON();
+var features_ROAD_3 = format_ROAD_3.readFeatures(json_ROAD_3, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_ROAD_3 = new ol.source.Vector({
+    features: features_ROAD_3,
+});
+var lyr_ROAD_3 = new ol.layer.Vector({
+    declutter: true,
+    source: jsonSource_ROAD_3,
+    style: style_ROAD_3,
+    title: 'ROAD'
+});
+
+var format_WATER_4 = new ol.format.GeoJSON();
+var features_WATER_4 = format_WATER_4.readFeatures(json_WATER_4, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_WATER_4 = new ol.source.Vector({
+    features: features_WATER_4,
+});
+var lyr_WATER_4 = new ol.layer.Vector({
+    declutter: true,
+    source: jsonSource_WATER_4,
+    style: style_WATER_4,
+    title: 'WATER'
+});
+
+var format_WATER1_1_5 = new ol.format.GeoJSON();
+var features_WATER1_1_5 = format_WATER1_1_5.readFeatures(json_WATER1_1_5, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_WATER1_1_5 = new ol.source.Vector({
+    features: features_WATER1_1_5,
+});
+var lyr_WATER1_1_5 = new ol.layer.Vector({
+    declutter: true,
+    source: jsonSource_WATER1_1_5,
+    style: style_WATER1_1_5,
+    title: 'WATER1_1'
+});
+
+var format_Pandharpur1_6 = new ol.format.GeoJSON();
+var features_Pandharpur1_6 = format_Pandharpur1_6.readFeatures(json_Pandharpur1_6, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+var jsonSource_Pandharpur1_6 = new ol.source.Vector({
+    features: features_Pandharpur1_6,
+});
+var lyr_Pandharpur1_6 = new ol.layer.Vector({
+    declutter: true,
+    source: jsonSource_Pandharpur1_6,
+    style: style_Pandharpur1_6,
+    title: 'Pandharpur1'
+});
+
+lyr_GoogleSatellite.setVisible(true);
+lyr_BUIDING_0.setVisible(true);
+lyr_LANDUSE_1.setVisible(true);
+lyr_RAILWAYS_2_2.setVisible(true);
+lyr_ROAD_3.setVisible(true);
+lyr_WATER_4.setVisible(true);
+lyr_WATER1_1_5.setVisible(true);
+lyr_Pandharpur1_6.setVisible(true);
+
+var layersList = [
+    lyr_GoogleSatellite,
+    lyr_BUIDING_0,
+    lyr_LANDUSE_1,
+    lyr_RAILWAYS_2_2,
+    lyr_ROAD_3,
+    lyr_WATER_4,
+    lyr_WATER1_1_5,
+    lyr_Pandharpur1_6
+];
